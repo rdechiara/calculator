@@ -21,18 +21,36 @@ function addNumpadListeners()
     {
        button.onclick = (e) =>
        {
-           const currentScreenText = getScreenText();
-
-           if(startsWith(currentScreenText, '0'))
-           {
-               setScreenText(e.target.innerText);
-           }
-           else
-           {
-               setScreenText(currentScreenText + e.target.innerText);
-           }
+            setScreenText(Number(screen.innerText) + e.target.innerText);
        }
     });
 }
+/*
+** Compute x op y.
+** Return NaN if an invalid operation is attempted
+** the operation result otherwise
+*/
+function operate(x, y, op)
+{
+    let result = undefined;
 
+    switch(op)
+    {
+        case '+':
+            result = x + y;
+            break;
+        case '-':
+            result = x - y;
+            break;
+        case '*':
+            result = x * y;
+            break;
+        case '/':
+            result = x / y;
+            break;
+        default:
+            result = NaN;
+            break;
+    }
+}
 addNumpadListeners();
