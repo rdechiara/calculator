@@ -1,56 +1,80 @@
-const screen = document.getElementById('screen');
-const numpad = document.getElementById('numpad');
-
-function setScreenText(newText)
+class Calculator
 {
-    screen.innerText = newText;
-}
-
-function getScreenText()
-{
-    return screen.innerText;
-}
-function startsWith(str, char)
-{
-    return str.charAt(0) === char;
-}
-function addNumpadListeners()
-{
-    const buttons = [...numpad.querySelectorAll('button')];
-    buttons.forEach((button) =>
+    constructor()
     {
-       button.onclick = (e) =>
-       {
-            setScreenText(Number(screen.innerText) + e.target.innerText);
-       }
-    });
-}
-/*
-** Compute x op y.
-** Return NaN if an invalid operation is attempted
-** the operation result otherwise
-*/
-function operate(x, y, op)
-{
-    let result = undefined;
+        this.operands = [];
+        this.firstNumberRead = false;
+    }
 
-    switch(op)
+    hasEnoughOperands()
     {
-        case '+':
-            result = x + y;
-            break;
-        case '-':
-            result = x - y;
-            break;
-        case '*':
-            result = x * y;
-            break;
-        case '/':
-            result = x / y;
-            break;
-        default:
-            result = NaN;
-            break;
+        return this.operands.length > 1;
+    }
+
+    insertOperand(operand)
+    {
+        if(this.operands.length > 0)
+        {
+            this.operands[1] = operand;
+        }
+        else
+        {
+            this.operands[0] = operand;
+        }
+    }
+
+    getLastResult()
+    {
+        return this.operands[0];
+    }
+
+    add()
+    {
+        if(!this.hasEnoughOperands())
+        {
+            throw new Error('Number of operands insufficient!');
+        }
+
+        this.operands[0] += this.operands[1];
+
+        return this.getLastResult();
+    }
+
+    sub()
+    {
+        if(!this.hasEnoughOperands())
+        {
+            throw new Error('Number of operands insufficient!');
+        }
+
+        this.operands[0] -= this.operands[1];
+        return this.getLastResult();
+    }
+
+    mul()
+    {
+        if(!this.hasEnoughOperands())
+        {
+            throw new Error('Number of operands insufficient!');
+        }
+
+        this.operands[0] *= this.operands[1];
+        return this.getLastResult();
+    }
+
+    div()
+    {
+        if(!this.hasEnoughOperands())
+        {
+            throw new Error('Number of operands insufficient!');
+        }
+
+        if(this.operands[1] === 0)
+        {
+            throw new Error('Attempt to divide by zero!');
+        }
+
+        this.operands[0] /= this.operands[1];
+        return this.getLastResult();
     }
 }
-addNumpadListeners();
