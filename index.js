@@ -109,4 +109,40 @@ class CalculatorView
     {
         this.setDisplayText('');
     }
+    appendToDisplay(text)
+    {
+        this.setDisplayText(this.getDisplayText() + text);
+    }
+    getKeypad()
+    {
+        return this.keypad;
+    }
+
+    getDisplay()
+    {
+        return this.display;
+    }
 }
+//implement the controller
+class Controller
+{
+    constructor(calc, view)
+    {
+        this.calculator = calc;
+        this.view = view;
+        this.initKeypad();
+    }
+
+    initKeypad()
+    {
+        const keypad = this.view.getKeypad();
+
+        keypad.addEventListener('click', (e) =>
+        {
+            const numberClicked = e.target.innerText;
+            this.view.appendToDisplay(numberClicked);
+        });
+    }
+}
+
+const controller = new Controller(new Calculator(), new CalculatorView('screen', 'numpad', 'oppad'));
