@@ -78,3 +78,35 @@ class Calculator
         return this.getLastResult();
     }
 }
+//implement the CalculatorView
+class CalculatorView
+{
+    constructor(displayId, keypadId, oppadId)
+    {
+        this.display = document.getElementById(displayId);
+        this.keypad = document.getElementById(keypadId);
+        this.oppad = document.getElementById(oppadId);
+    }
+
+    getDisplayText()
+    {
+        return this.display.hasOwnProperty('value') ? this.display.value : this.display.innerText;
+    }
+
+    setDisplayText(text)
+    {
+        if(this.display.hasOwnProperty('value'))
+        {
+            this.display.value = text;
+        }
+        else
+        {
+            this.display.innerText = text;
+        }
+    }
+
+    clearDisplay()
+    {
+        this.setDisplayText('');
+    }
+}
